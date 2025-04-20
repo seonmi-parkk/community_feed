@@ -1,5 +1,7 @@
 package org.comunity.user.domain;
 
+import org.comunity.common.domain.PositiveIntegerCounter;
+
 import java.util.Objects;
 
 public class User {
@@ -8,14 +10,17 @@ public class User {
     private final UserInfo userInfo;
     // 팔로잉 팔로워 카운터는 로직이 동일
     // 매번 증가, 감소 할때마다 동일한 검증을 하는 것 보다는 vo를 통해 감싸서 안전하게 처리
-    private final UserRelationCounter followingCounter;
-    private final UserRelationCounter followerCounter;
+    private final PositiveIntegerCounter followingCounter;
+    private final PositiveIntegerCounter followerCounter;
 
-    public User(long id, UserInfo userInfo) {
+    public User(Long id, UserInfo userInfo) {
+        if (userInfo == null) {
+            throw new NullPointerException();
+        }
         this.id = id;
         this.userInfo = userInfo;
-        this.followingCounter = new UserRelationCounter();
-        this.followerCounter = new UserRelationCounter();
+        this.followingCounter = new PositiveIntegerCounter();
+        this.followerCounter = new PositiveIntegerCounter();
     }
 
     public void follow(User targetUser) {
@@ -61,5 +66,16 @@ public class User {
         return Objects.hashCode(id);
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public int followerCount() {
+        return followerCounter.getCount();
+    }
+
+    public int followingCount() {
+        return followingCounter.getCount();
+    }
 
 }

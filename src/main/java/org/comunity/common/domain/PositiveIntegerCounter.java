@@ -1,10 +1,9 @@
-package org.comunity.user.domain;
+package org.comunity.common.domain;
 
-public class UserRelationCounter {
-
+public class PositiveIntegerCounter {
     private int count;
 
-    public UserRelationCounter() {
+    public PositiveIntegerCounter() {
         this.count = 0;
     }
 
@@ -17,5 +16,9 @@ public class UserRelationCounter {
             return;
         }
         this.count--;
+    }
+
+    public int getCount() {
+        return count;
     }
 }
