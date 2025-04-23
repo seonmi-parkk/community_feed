@@ -1,17 +1,22 @@
 package org.comunity.user.domain;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 import org.comunity.common.domain.PositiveIntegerCounter;
 
 import java.util.Objects;
-
+@Getter
+@Builder
+@AllArgsConstructor
 public class User {
-
-    private final long id;
-    private final UserInfo userInfo;
+    private Long id;
+    private UserInfo userInfo;
     // 팔로잉 팔로워 카운터는 로직이 동일
     // 매번 증가, 감소 할때마다 동일한 검증을 하는 것 보다는 vo를 통해 감싸서 안전하게 처리
-    private final PositiveIntegerCounter followingCounter;
-    private final PositiveIntegerCounter followerCounter;
+    private PositiveIntegerCounter followingCounter;
+    private PositiveIntegerCounter followerCounter;
 
     public User(Long id, UserInfo userInfo) {
         if (userInfo == null) {
@@ -66,16 +71,21 @@ public class User {
         return Objects.hashCode(id);
     }
 
-    public long getId() {
-        return id;
-    }
-
     public int followerCount() {
         return followerCounter.getCount();
     }
 
     public int followingCount() {
         return followingCounter.getCount();
+    }
+
+
+    public String getProfileImage() {
+        return userInfo.getProfileImageUrl();
+    }
+
+    public String getName() {
+        return userInfo.getName();
     }
 
 }

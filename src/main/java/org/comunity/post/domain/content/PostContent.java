@@ -11,7 +11,7 @@ public class PostContent extends Content {
 
     @Override
     protected void checkText(String contentText) {
-        if(contentText == null | contentText.isEmpty()){
+        if(contentText == null || contentText.isEmpty()){
             throw new IllegalArgumentException();
         }
 

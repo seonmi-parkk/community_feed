@@ -13,7 +13,7 @@ public class DatetimeInfo {
     }
 
     // 수정된 여부 / dateTime update
-    public void upateEditDatetime(){
+    public void updateEditDatetime(){
         this.isEdited = true;
         this.dateTime = LocalDateTime.now();
     }

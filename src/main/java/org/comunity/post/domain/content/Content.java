@@ -11,20 +11,20 @@ package org.comunity.post.domain.content;
 import org.comunity.post.domain.common.DatetimeInfo;
 
 public abstract class Content {
-    String contentText;
-    final DatetimeInfo dateTimeInfo;
+    protected String contentText;
+    protected final DatetimeInfo dateTimeInfo;
 
     protected Content(String contentText) {
         checkText(contentText);
         this.contentText = contentText;
         this.dateTimeInfo = new DatetimeInfo();
-        this.dateTimeInfo.upateEditDatetime();
+        this.dateTimeInfo.updateEditDatetime();
     }
 
     public void updateContent(String updateContent) {
         checkText(updateContent);
         this.contentText = updateContent;
-        this.dateTimeInfo.upateEditDatetime();
+        this.dateTimeInfo.updateEditDatetime();
     }
 
     protected abstract void checkText(String contentText);
