@@ -1,0 +1,23 @@
+package org.comunity.post.repository.jpa;
+
+import org.comunity.post.repository.entity.post.PostEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+
+public interface JpaPostRepository extends JpaRepository<PostEntity, Long> {
+
+    @Modifying
+    @Query(value="UPDATE PostEntity p "// #{#postEntity.content} => 객체 안의 값 가져오기
+            + "SET p.content = :#{#postEntity.content},"
+            + "p.updDt = now() "
+            + "WHERE p.id = :#{#postEntity.id}")
+    void updatePostEntity(PostEntity postEntity);
+
+    @Modifying
+    @Query(value = "UPDATE PostEntity p "
+            + "SET p.likeCount = :#{#postEntity.likeCount},"
+            + "p.updDt = now() " // 직접 jpql을 작성하는 경우 @LastModifiedDate 동작이 안되기때문에 작성해줘야함.
+            + "WHERE p.id = :#{#postEntity.id}")
+    void updateLikeCount(PostEntity postEntity);
+}

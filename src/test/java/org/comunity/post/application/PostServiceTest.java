@@ -27,7 +27,7 @@ class PostServiceTest extends PostApplicationTestTemplete{
         Post savedPost = postService.createPost(postRequestDto);
 
         // when
-        UpdatePostRequestDto updateDto = new UpdatePostRequestDto(savedPost.getId(), user.getId(), "updated-content", PostPublicationState.PRIVATE);
+        UpdatePostRequestDto updateDto = new UpdatePostRequestDto(user.getId(), "updated-content", PostPublicationState.PRIVATE);
         Post updatedPost = postService.updatePost(savedPost.getId(), updateDto);
 
         // then

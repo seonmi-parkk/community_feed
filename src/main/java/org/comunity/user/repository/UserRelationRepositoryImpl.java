@@ -44,6 +44,5 @@ public class UserRelationRepositoryImpl implements UserRelationRepository {
         jpaUserRelationRepository.deleteById(id);
         // user와 targetUser의 팔로잉/팔로워 숫자 변경된 것 저장
         jpaUserRepository.saveAll(List.of(new UserEntity(user), new UserEntity(targetUser)));
-
     }
 }

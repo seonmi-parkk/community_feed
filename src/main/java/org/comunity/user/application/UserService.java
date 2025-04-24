@@ -2,6 +2,7 @@ package org.comunity.user.application;
 
 import lombok.RequiredArgsConstructor;
 import org.comunity.user.application.dto.CreateUserRequestDto;
+import org.comunity.user.application.dto.GetUserResponseDto;
 import org.comunity.user.application.interfaces.UserRepository;
 import org.comunity.user.domain.User;
 import org.comunity.user.domain.UserInfo;
@@ -24,6 +25,11 @@ public class UserService {
 
     public User getUser(Long id) {
         return userRepository.findById(id);
+    }
+
+    public GetUserResponseDto getUserProfile(Long id) {
+        User user = getUser(id);
+        return new GetUserResponseDto(user);
     }
 
 }
