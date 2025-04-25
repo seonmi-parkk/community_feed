@@ -1,6 +1,7 @@
 package org.comunity.user.repository;
 
 import lombok.RequiredArgsConstructor;
+import org.comunity.post.repository.post_queue.UserPostQueueCommandRepositoy;
 import org.comunity.user.application.interfaces.UserRelationRepository;
 import org.comunity.user.domain.User;
 import org.comunity.user.repository.entity.UserEntity;
@@ -19,7 +20,7 @@ public class UserRelationRepositoryImpl implements UserRelationRepository {
 
     private final JpaUserRelationRepository jpaUserRelationRepository;
     private final JpaUserRepository jpaUserRepository;
-
+    private final UserPostQueueCommandRepositoy commandRepositoy;
 
     @Override
     public boolean isAlreadyFollow(User user, User targetUser) {
@@ -35,6 +36,7 @@ public class UserRelationRepositoryImpl implements UserRelationRepository {
 
         // user와 targetUser의 팔로잉/팔로워 숫자 변경된 것 저장
         jpaUserRepository.saveAll(List.of(new UserEntity(user), new UserEntity(targetUser)));
+        commandRepositoy.saveFollowPost(user.getId(), targetUser.getId());
     }
 
     @Override
@@ -44,5 +46,6 @@ public class UserRelationRepositoryImpl implements UserRelationRepository {
         jpaUserRelationRepository.deleteById(id);
         // user와 targetUser의 팔로잉/팔로워 숫자 변경된 것 저장
         jpaUserRepository.saveAll(List.of(new UserEntity(user), new UserEntity(targetUser)));
+        commandRepositoy.deleteUnfollowPost(user.getId(), targetUser.getId());
     }
 }

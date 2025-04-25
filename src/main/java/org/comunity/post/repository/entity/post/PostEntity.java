@@ -10,6 +10,7 @@ import org.comunity.post.domain.Post;
 import org.comunity.post.domain.PostPublicationState;
 import org.comunity.post.domain.content.PostContent;
 import org.comunity.user.repository.entity.UserEntity;
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Table(name = "community_post")
@@ -41,6 +42,9 @@ public class PostEntity extends TimeBaseEntity {
     private PostPublicationState state;
 
     private Integer likeCount;
+
+    @ColumnDefault("0") // db에서 default값을 0으로 자동 설정
+    private int commentCount;
 
     public PostEntity(Post post) {
         this.id = post.getId();

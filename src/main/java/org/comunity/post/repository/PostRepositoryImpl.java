@@ -5,6 +5,7 @@ import org.comunity.post.application.interfaces.PostRepository;
 import org.comunity.post.domain.Post;
 import org.comunity.post.repository.entity.post.PostEntity;
 import org.comunity.post.repository.jpa.JpaPostRepository;
+import org.comunity.post.repository.post_queue.UserPostQueueCommandRepositoy;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class PostRepositoryImpl implements PostRepository {
 
     private final JpaPostRepository jpaPostRepository;
+    private final UserPostQueueCommandRepositoy commandRepository;
 
     @Override
     // update쿼리 2번 수행되는 문제 해결 방법 1번
@@ -34,10 +36,12 @@ public class PostRepositoryImpl implements PostRepository {
             return postEntity.toPost();
         }
         postEntity = jpaPostRepository.save(postEntity);
+        commandRepository.publishPost(postEntity);
         return postEntity.toPost();
     }
 
     @Override
+    @Transactional
     public Post findById(Long id) {
         PostEntity postEntity = jpaPostRepository.findById(id).orElseThrow();
         return postEntity.toPost();
